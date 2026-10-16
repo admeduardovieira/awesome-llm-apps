@@ -16,12 +16,14 @@ This Streamlit app is an AI-powered travel Agent that generates personalized tra
 git clone https://github.com/Shubhamsaboo/awesome-llm-apps.git
 cd awesome-llm-apps/starter_ai_agents/ai_travel_agent
 ```
+
 2. Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
-3. Get your OpenAI API Key
+
+3. Get your OpenAI API Key (for cloud version)
 
 - Sign up for an [OpenAI account](https://platform.openai.com/) (or the LLM provider of your choice) and obtain your API key.
 
@@ -30,24 +32,60 @@ pip install -r requirements.txt
 - Sign up for an [SerpAPI account](https://serpapi.com/) and obtain your API key.
 
 5. Run the Streamlit App
+
 ```bash
 streamlit run travel_agent.py
 ```
 
-For local LLM usage (with Ollama):
+### 🏠 Local Mode (with Ollama)
+
+For local LLM usage without sending data to external APIs:
+
+#### ⚠️ Prerequisites
+
+You need [Ollama](https://ollama.com/) installed and running:
+
+**macOS/Linux:**
+```bash
+# Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Start Ollama service
+ollama serve  # or use: systemctl start ollama
+
+# Pull the required models
+ollama pull llama3.2
+```
+
+**Windows:**
+1. Download Ollama from https://ollama.com/download
+2. Run the installer
+3. Start Ollama via Services or by running `ollama.exe serve` in PowerShell
+4. Pull models:
+```powershell
+ollama pull llama3.2
+```
+
+#### Running Local Mode
+
 ```bash
 streamlit run local_travel_agent.py
 ```
 
+The app will prompt for your SerpAPI key. No OpenAI API key needed in local mode.
+
 ### How it Works?
 
 The AI Travel Agent has two main components:
+
 - **Researcher:** Responsible for generating search terms based on the user's destination and travel duration, and searching the web for relevant activities and accommodations using SerpAPI.
+
 - **Planner:** Takes the research results and user preferences to generate a personalized draft itinerary that includes suggested activities, dining options, and accommodations.
 
 ### Using the Calendar Download Feature
 
 After generating your travel itinerary:
+
 1. Click the "Download Itinerary as Calendar (.ics)" button that appears next to the "Generate Itinerary" button
 2. Save the .ics file to your computer
 3. Import the file into your preferred calendar application (Google Calendar, Apple Calendar, Outlook, etc.)
@@ -58,5 +96,7 @@ This feature makes it easy to keep track of your travel plans and have your itin
 
 ### Local vs Cloud Version
 
-- **travel_agent.py**: Uses OpenAI's GPT-4o for high-quality itineraries (requires OpenAI API key)
-- **local_travel_agent.py**: Uses Ollama for local LLM inference without sending data to external APIs (requires Ollama to be installed and running)
+- **`travel_agent.py`**: Uses OpenAI's GPT-4o for high-quality itineraries (requires OpenAI API key)
+- **`local_travel_agent.py`**: Uses Ollama for local LLM inference without sending data to external APIs (requires [Ollama](#️-local-mode-with-ollama) installed and running)
+
+**Note:** Local mode requires significantly more local resources (RAM, CPU) but keeps your data private and works offline.

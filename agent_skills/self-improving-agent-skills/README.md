@@ -1,9 +1,8 @@
-# ♾️ Self-Improving Agent Skills 
+# ♾️ Self-Improving Agent Skills
 
 Automatically optimize your agent skills using a multi-agent system built with **Google ADK (Agent Development Kit)** and **Gemini**. Upload a skill, let the agents generate test scenarios and evaluation criteria, then watch as three specialized ADK agents collaborate to improve your skill through iterative optimization.
 
 <img width="960" height="718" alt="Screenshot 2026-04-12 at 7 26 04 PM" src="https://github.com/user-attachments/assets/35a31f1a-398d-4797-a5d8-de538b4391e5" />
-
 
 ## How It Works
 
@@ -39,15 +38,15 @@ self-improving-agent-skills/
 ├── backend/                 # FastAPI server + ADK optimization engine
 │   ├── app.py              # REST API endpoints + SSE streaming
 │   ├── adk_optimizer.py    # Multi-agent optimizer (Executor, Analyst, Mutator)
-│   └── requirements.txt
+│   ├── requirements.txt    # Python dependencies
+│   ├── .env.example        # Environment variables template
+│   └── ... 
 ├── frontend/               # Next.js + React + Tailwind
 │   ├── src/
 │   │   ├── app/            # Main page + layout
 │   │   └── components/     # Upload, Config, Running, Results steps
 │   ├── package.json
 │   └── *.config.ts
-│   ├── code-reviewer/
-│   └── content-writer/
 └── README.md
 ```
 
@@ -72,13 +71,13 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment (optional — the app will prompt for your API key in the UI)
+# Set up environment
 cp .env.example .env
 # Edit .env and add your GOOGLE_API_KEY
 
 # Run server
-python app.py
-# Server runs on http://localhost:8891
+uvicorn app:app --host 0.0.0.0 --port 8891
+# or: python -c "import uvicorn; uvicorn.run('app:app', host='0.0.0.0', port=8891)"
 ```
 
 ### Frontend Setup
@@ -103,6 +102,25 @@ npm run dev
 5. Review and edit the generated test scenarios and evaluation criteria
 6. Click "Start Optimization" and watch the agents collaborate to improve your skill
 7. Download your improved skill when complete
+
+---
+
+## Environment Configuration
+
+The `.env.example` file provides a template with all available configuration options:
+
+```bash
+# Google AI Studio API Configuration
+GOOGLE_API_KEY=your_google_api_key_here
+
+# Model Configuration (optional)
+# Default: gemini-3.8-flash
+GEMINI_MODEL=gemini-3.8-flash
+
+# Server Configuration (optional)
+HOST=0.0.0.0
+PORT=8891
+```
 
 ## Skill Format
 
@@ -200,7 +218,7 @@ The Gemini API key is passed from the frontend with each request. Optionally set
 The Gemini model is chosen per request: the UI sends the id from its model field, and a request without one runs on the server default. That default is `gemini-3.8-flash`, or whatever `GEMINI_MODEL` is set to when the server starts:
 
 ```bash
-GEMINI_MODEL=gemini-3.1-pro-preview python app.py
+GEMINI_MODEL=gemini-3.1-pro-preview uvicorn app:app --port 8891
 ```
 
 Any Gemini model id is accepted; a value that does not look like one is refused with a 400 rather than replaced. `GET /api/models` reports the current default, which the UI shows in the field.

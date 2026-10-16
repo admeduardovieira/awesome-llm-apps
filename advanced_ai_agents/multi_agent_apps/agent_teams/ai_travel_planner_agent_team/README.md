@@ -52,7 +52,7 @@ Full-stack developer and software engineer passionate about building intelligent
 
 ---
 
-## 🎬 Demo Video Link
+## 📽️ Demo Video Link
 
 [https://youtu.be/eTll7EdQyY8](https://youtu.be/eTll7EdQyY8)
 
@@ -68,3 +68,96 @@ Six specialized agents work together to create comprehensive travel plans:
 4. **💰 Budget Agent** - Handles cost optimization and financial planning
 5. **✈️ Flight Search Agent** - Plans air travel routes and comparisons
 6. **📅 Itinerary Specialist** - Creates detailed day-by-day schedules with optimal timing
+
+---
+
+## 📥 Installation
+
+### Backend Setup
+
+This backend uses **uv** as the package manager (ultra-fast, recommended).
+
+```bash
+cd backend
+
+# Install uv (if not already installed)
+pip install uv
+
+# Install dependencies
+uv pip install pyproject.toml
+
+# Or use Python virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# Windows: venv\Scripts\activate
+
+# Install dependencies with pip
+pip install -r <(python -c "import tomllib; d=tomllib.load(open('pyproject.toml','rb')); print(''.join(chr(10).join(d['project']['dependencies'])))")
+```
+
+### Environment Configuration
+
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and add your API keys:
+   ```
+   # Bright Data credentials (optional - for scraping)
+   BRIGHT_DATA_API_TOKEN=your_bright_data_api_token
+   BRIGHT_DATA_BROWSER_AUTH=your_bright_data_browser_auth
+
+   # Database connection URL
+   DATABASE_URL=your_database_url
+
+   # OpenRouter API key (optional)
+   OPENROUTER_API_KEY=your_openrouter_api_key
+
+   # OpenAI API key
+   OPENAI_API_KEY=your_openai_api_key
+
+   # Gemini API key
+   GOOGLE_API_KEY=your_google_api_key
+   ```
+
+### Frontend Setup
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+# App runs on http://localhost:3000
+```
+
+### Running the Application
+
+```bash
+# Start backend (port 8000)
+cd backend
+uv run python main.py
+
+# Start frontend (port 3000)
+cd frontend
+npm run dev
+```
+
+---
+
+## 📚 Resources
+
+- [Step-by-step tutorials on Unwind AI](https://www.theunwindai.com) · **[Quick start](#-run-one-now)** · **[Browse all templates](#-browse-all-templates)**
+
+---
+
+> 📬 New templates drop weekly. [Get them in your inbox on Unwind AI](https://www.theunwindai.com).
+
+---
+
+## 🔧 Environment Variables
+
+See `.env.example` for all available configuration options.
